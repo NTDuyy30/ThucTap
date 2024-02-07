@@ -22,7 +22,6 @@ public class CategoryService implements ICategoryService {
 	@Override
 	public CategoryModel insert(CategoryModel categoryModel) {
 		categoryModel.setNgayTao(new Timestamp(System.currentTimeMillis()));
-		categoryModel.setNguoiTao("Duy");
 		Long id = this.categoryDAO.insert(categoryModel);
 		return this.categoryDAO.findOne(id);
 	}
@@ -33,7 +32,6 @@ public class CategoryService implements ICategoryService {
 		categoryUpdate.setNgayTao(oldCategory.getNgayTao());
 		categoryUpdate.setNguoiTao(oldCategory.getNguoiTao());
 		categoryUpdate.setNgaySua(new Timestamp(System.currentTimeMillis()));
-		categoryUpdate.setNguoiSua("Nguyễn Hiếu");
 		this.categoryDAO.update(categoryUpdate);
 		return this.categoryDAO.findOne(categoryUpdate.getId());
 	}

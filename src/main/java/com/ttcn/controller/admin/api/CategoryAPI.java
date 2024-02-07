@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ttcn.model.CategoryModel;
+import com.ttcn.model.UserModel;
 import com.ttcn.service.ICategoryService;
 import com.ttcn.utils.HttpUtil;
+import com.ttcn.utils.SessionUtil;
 
 @WebServlet(urlPatterns = {"/api-admin-category"})
 public class CategoryAPI extends HttpServlet {
@@ -25,6 +27,7 @@ public class CategoryAPI extends HttpServlet {
 		response.setContentType("application/json");
 		ObjectMapper mapper = new ObjectMapper();
 		CategoryModel categoryModel =  HttpUtil.of(request.getReader()).toModel(CategoryModel.class);
+		categoryModel.setNguoiTao(((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getHoTen());
 		categoryModel = this.categoryService.insert(categoryModel);
 		mapper.writeValue(response.getOutputStream(), categoryModel);
 	}
@@ -34,6 +37,7 @@ public class CategoryAPI extends HttpServlet {
 		response.setContentType("application/json");
 		ObjectMapper mapper = new ObjectMapper();
 		CategoryModel categoryModel =  HttpUtil.of(request.getReader()).toModel(CategoryModel.class);
+		categoryModel.setNguoiSua(((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getHoTen());
 		categoryModel = this.categoryService.update(categoryModel);
 		mapper.writeValue(response.getOutputStream(), categoryModel);
 	}
